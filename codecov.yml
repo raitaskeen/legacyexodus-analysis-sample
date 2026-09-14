@@ -6,6 +6,11 @@ coverage:
     patch:
       default:
         informational: true
+
+ignore:
+  - "tests/**"
+  - "demo/**"
+
 comment:
   layout: "reach, diff, flags, files"
   behavior: default
