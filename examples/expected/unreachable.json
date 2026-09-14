@@ -1,0 +1,191 @@
+{
+  "filePath": "examples/unreachable.ts",
+  "state": "RESOLVED",
+  "summary": {
+    "totalScopes": 2,
+    "totalBlocks": 8,
+    "totalEdges": 5,
+    "totalReachableBlocks": 6,
+    "totalUnreachableBlocks": 2,
+    "state": "RESOLVED"
+  },
+  "controlFlowGraphs": [
+    {
+      "id": "cfg:examples/unreachable.ts:module",
+      "filePath": "examples/unreachable.ts",
+      "scopeName": "module",
+      "state": "RESOLVED",
+      "entryBlockId": "module:entry",
+      "exitBlockId": "module:exit",
+      "blocks": [
+        {
+          "id": "module:entry",
+          "statements": [],
+          "predecessorIds": [],
+          "successorIds": [
+            "module:exit"
+          ]
+        },
+        {
+          "id": "module:exit",
+          "statements": [],
+          "predecessorIds": [
+            "module:entry"
+          ],
+          "successorIds": []
+        }
+      ],
+      "edges": [
+        {
+          "id": "module:entry->module:exit:next",
+          "fromBlockId": "module:entry",
+          "toBlockId": "module:exit",
+          "kind": "next"
+        }
+      ],
+      "unreachableBlockIds": [],
+      "deadCodeStatementIds": []
+    },
+    {
+      "id": "cfg:examples/unreachable.ts:analyzeConstants@1:0",
+      "filePath": "examples/unreachable.ts",
+      "scopeName": "analyzeConstants@1:0",
+      "state": "RESOLVED",
+      "entryBlockId": "analyzeConstants@1:0:entry",
+      "exitBlockId": "analyzeConstants@1:0:exit",
+      "blocks": [
+        {
+          "id": "analyzeConstants@1:0:entry",
+          "statements": [
+            {
+              "id": "analyzeConstants@1:0:stmt:2:2",
+              "type": "IfStatement",
+              "location": {
+                "line": 2,
+                "column": 2
+              }
+            }
+          ],
+          "predecessorIds": [],
+          "successorIds": [
+            "analyzeConstants@1:0:b2"
+          ]
+        },
+        {
+          "id": "analyzeConstants@1:0:b1",
+          "statements": [
+            {
+              "id": "analyzeConstants@1:0:stmt:3:4",
+              "type": "ExpressionStatement",
+              "location": {
+                "line": 3,
+                "column": 4
+              }
+            }
+          ],
+          "predecessorIds": [],
+          "successorIds": [
+            "analyzeConstants@1:0:b2"
+          ]
+        },
+        {
+          "id": "analyzeConstants@1:0:b2",
+          "statements": [
+            {
+              "id": "analyzeConstants@1:0:stmt:6:2",
+              "type": "WhileStatement",
+              "location": {
+                "line": 6,
+                "column": 2
+              }
+            }
+          ],
+          "predecessorIds": [
+            "analyzeConstants@1:0:b1",
+            "analyzeConstants@1:0:entry"
+          ],
+          "successorIds": [
+            "analyzeConstants@1:0:b4"
+          ]
+        },
+        {
+          "id": "analyzeConstants@1:0:b3",
+          "statements": [
+            {
+              "id": "analyzeConstants@1:0:stmt:7:4",
+              "type": "ExpressionStatement",
+              "location": {
+                "line": 7,
+                "column": 4
+              }
+            }
+          ],
+          "predecessorIds": [],
+          "successorIds": []
+        },
+        {
+          "id": "analyzeConstants@1:0:b4",
+          "statements": [
+            {
+              "id": "analyzeConstants@1:0:stmt:10:2",
+              "type": "ReturnStatement",
+              "location": {
+                "line": 10,
+                "column": 2
+              }
+            }
+          ],
+          "predecessorIds": [
+            "analyzeConstants@1:0:b2"
+          ],
+          "successorIds": [
+            "analyzeConstants@1:0:exit"
+          ],
+          "terminator": "ReturnStatement"
+        },
+        {
+          "id": "analyzeConstants@1:0:exit",
+          "statements": [],
+          "predecessorIds": [
+            "analyzeConstants@1:0:b4"
+          ],
+          "successorIds": []
+        }
+      ],
+      "edges": [
+        {
+          "id": "analyzeConstants@1:0:entry->analyzeConstants@1:0:b2:false",
+          "fromBlockId": "analyzeConstants@1:0:entry",
+          "toBlockId": "analyzeConstants@1:0:b2",
+          "kind": "false"
+        },
+        {
+          "id": "analyzeConstants@1:0:b1->analyzeConstants@1:0:b2:next",
+          "fromBlockId": "analyzeConstants@1:0:b1",
+          "toBlockId": "analyzeConstants@1:0:b2",
+          "kind": "next"
+        },
+        {
+          "id": "analyzeConstants@1:0:b2->analyzeConstants@1:0:b4:false",
+          "fromBlockId": "analyzeConstants@1:0:b2",
+          "toBlockId": "analyzeConstants@1:0:b4",
+          "kind": "false"
+        },
+        {
+          "id": "analyzeConstants@1:0:b4->analyzeConstants@1:0:exit:return",
+          "fromBlockId": "analyzeConstants@1:0:b4",
+          "toBlockId": "analyzeConstants@1:0:exit",
+          "kind": "return"
+        }
+      ],
+      "unreachableBlockIds": [
+        "analyzeConstants@1:0:b1",
+        "analyzeConstants@1:0:b3"
+      ],
+      "deadCodeStatementIds": [
+        "analyzeConstants@1:0:stmt:3:4",
+        "analyzeConstants@1:0:stmt:7:4"
+      ]
+    }
+  ]
+}

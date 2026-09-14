@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LegacyExodus Analysis Sample — Control-Flow Demo</title>
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="header-content">
+        <h1 class="brand-title">LegacyExodus Analysis Sample</h1>
+        <p class="brand-subtitle">
+          Deterministic control-flow analysis for a focused JavaScript/TypeScript subset.
+        </p>
+      </div>
+    </header>
+
+    <main>
+      <div class="toolbar" role="toolbar" aria-label="Analysis controls">
+        <div class="toolbar-group">
+          <label for="example-select" class="selector-label">Example:</label>
+          <select id="example-select" aria-label="Select curated example"></select>
+        </div>
+        <div class="toolbar-actions">
+          <button id="analyze-btn" class="btn btn-primary" type="button" title="Analyze source code (Ctrl+Enter)">
+            Analyze
+          </button>
+          <button id="reset-btn" class="btn btn-secondary" type="button" title="Reset to example source">
+            Reset
+          </button>
+          <button id="copy-json-btn" class="btn btn-secondary" type="button" title="Copy canonical JSON to clipboard">
+            Copy JSON
+          </button>
+        </div>
+      </div>
+
+      <div id="error-banner" class="error-banner" style="display: none;" role="alert">
+        <div class="error-title"><strong>Syntax Error</strong></div>
+        <div id="error-message" class="error-body"></div>
+      </div>
+
+      <div id="unsupported-banner" class="unsupported-banner" style="display: none;" role="status">
+        <strong>Notice: Partial Control-Flow Precision</strong><br />
+        This input contains expressions (such as logical short-circuiting <code>&&</code>/<code>||</code>) whose conditional branch semantics are intentionally not modeled at the statement level. The analyzer reports <code>UNSUPPORTED</code> rather than inventing unmodeled execution edges.
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-title">State</span>
+          <span id="stat-state" class="stat-value">RESOLVED</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Blocks</span>
+          <span id="stat-blocks" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Edges</span>
+          <span id="stat-edges" class="stat-value">0</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-title">Unreachable</span>
+          <span id="stat-unreachable" class="stat-value">0</span>
+        </div>
+      </div>
+
+      <div class="panels-grid">
+        <!-- Left Panel: Source -->
+        <div class="panel">
+          <div class="panel-header">
+            <span>Source</span>
+            <span id="file-label" class="file-label">sample.ts</span>
+          </div>
+          <div class="editor-container">
+            <textarea id="source-input" spellcheck="false" aria-label="Source code editor"></textarea>
+          </div>
+          <div class="editor-footer">
+            <span class="shortcut-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to analyze</span>
+          </div>
+        </div>
+
+        <!-- Right Panel: Analysis -->
+        <div class="panel">
+          <div class="panel-header">
+            <span>Control-Flow Graph</span>
+            <div id="scope-controls" class="scope-controls" style="display: none;">
+              <label for="scope-select" class="scope-label">Scope:</label>
+              <select id="scope-select" aria-label="Select scope to inspect"></select>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="graph-legend">
+              <div class="legend-row">
+                <span class="legend-chip"><span class="swatch swatch-entry"></span> Entry</span>
+                <span class="legend-chip"><span class="swatch swatch-reachable"></span> Reachable</span>
+                <span class="legend-chip"><span class="swatch swatch-unreachable"></span> Unreachable</span>
+                <span class="legend-chip"><span class="swatch swatch-exit"></span> Exit</span>
+              </div>
+            </div>
+
+            <div id="visual-graph-container" class="cfg-svg-wrapper"></div>
+
+            <div id="block-inspector" class="block-inspector" style="display: none;">
+              <div class="inspector-title">Block Inspector</div>
+              <div id="inspector-content" class="inspector-content"></div>
+            </div>
+
+            <details class="json-details">
+              <summary class="json-summary">Raw JSON</summary>
+              <pre class="json-view"><code id="json-output"></code></pre>
+            </details>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <span>LegacyExodus Analysis Sample &bull; Deterministic intraprocedural static analysis</span>
+    </footer>
+
+    <script type="module" src="./src/main.ts"></script>
+  </body>
+</html>

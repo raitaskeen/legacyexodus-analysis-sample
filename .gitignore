@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Production build outputs
+dist/
+demo/dist/
+
+# Test artifacts & coverage
+coverage/
+*.lcov
+
+# Environment and OS files
+.DS_Store
+Thumbs.db
+*.log

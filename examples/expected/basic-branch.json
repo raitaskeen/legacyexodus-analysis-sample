@@ -1,0 +1,155 @@
+{
+  "filePath": "examples/basic-branch.ts",
+  "state": "RESOLVED",
+  "summary": {
+    "totalScopes": 2,
+    "totalBlocks": 6,
+    "totalEdges": 5,
+    "totalReachableBlocks": 6,
+    "totalUnreachableBlocks": 0,
+    "state": "RESOLVED"
+  },
+  "controlFlowGraphs": [
+    {
+      "id": "cfg:examples/basic-branch.ts:module",
+      "filePath": "examples/basic-branch.ts",
+      "scopeName": "module",
+      "state": "RESOLVED",
+      "entryBlockId": "module:entry",
+      "exitBlockId": "module:exit",
+      "blocks": [
+        {
+          "id": "module:entry",
+          "statements": [],
+          "predecessorIds": [],
+          "successorIds": [
+            "module:exit"
+          ]
+        },
+        {
+          "id": "module:exit",
+          "statements": [],
+          "predecessorIds": [
+            "module:entry"
+          ],
+          "successorIds": []
+        }
+      ],
+      "edges": [
+        {
+          "id": "module:entry->module:exit:next",
+          "fromBlockId": "module:entry",
+          "toBlockId": "module:exit",
+          "kind": "next"
+        }
+      ],
+      "unreachableBlockIds": [],
+      "deadCodeStatementIds": []
+    },
+    {
+      "id": "cfg:examples/basic-branch.ts:classify@1:0",
+      "filePath": "examples/basic-branch.ts",
+      "scopeName": "classify@1:0",
+      "state": "RESOLVED",
+      "entryBlockId": "classify@1:0:entry",
+      "exitBlockId": "classify@1:0:exit",
+      "blocks": [
+        {
+          "id": "classify@1:0:entry",
+          "statements": [
+            {
+              "id": "classify@1:0:stmt:2:2",
+              "type": "IfStatement",
+              "location": {
+                "line": 2,
+                "column": 2
+              }
+            }
+          ],
+          "predecessorIds": [],
+          "successorIds": [
+            "classify@1:0:b1",
+            "classify@1:0:b2"
+          ]
+        },
+        {
+          "id": "classify@1:0:b1",
+          "statements": [
+            {
+              "id": "classify@1:0:stmt:3:4",
+              "type": "ReturnStatement",
+              "location": {
+                "line": 3,
+                "column": 4
+              }
+            }
+          ],
+          "predecessorIds": [
+            "classify@1:0:entry"
+          ],
+          "successorIds": [
+            "classify@1:0:exit"
+          ],
+          "terminator": "ReturnStatement"
+        },
+        {
+          "id": "classify@1:0:b2",
+          "statements": [
+            {
+              "id": "classify@1:0:stmt:6:2",
+              "type": "ReturnStatement",
+              "location": {
+                "line": 6,
+                "column": 2
+              }
+            }
+          ],
+          "predecessorIds": [
+            "classify@1:0:entry"
+          ],
+          "successorIds": [
+            "classify@1:0:exit"
+          ],
+          "terminator": "ReturnStatement"
+        },
+        {
+          "id": "classify@1:0:exit",
+          "statements": [],
+          "predecessorIds": [
+            "classify@1:0:b1",
+            "classify@1:0:b2"
+          ],
+          "successorIds": []
+        }
+      ],
+      "edges": [
+        {
+          "id": "classify@1:0:entry->classify@1:0:b1:true",
+          "fromBlockId": "classify@1:0:entry",
+          "toBlockId": "classify@1:0:b1",
+          "kind": "true"
+        },
+        {
+          "id": "classify@1:0:entry->classify@1:0:b2:false",
+          "fromBlockId": "classify@1:0:entry",
+          "toBlockId": "classify@1:0:b2",
+          "kind": "false"
+        },
+        {
+          "id": "classify@1:0:b1->classify@1:0:exit:return",
+          "fromBlockId": "classify@1:0:b1",
+          "toBlockId": "classify@1:0:exit",
+          "kind": "return"
+        },
+        {
+          "id": "classify@1:0:b2->classify@1:0:exit:return",
+          "fromBlockId": "classify@1:0:b2",
+          "toBlockId": "classify@1:0:exit",
+          "kind": "return"
+        }
+      ],
+      "unreachableBlockIds": [],
+      "deadCodeStatementIds": []
+    }
+  ]
+}
