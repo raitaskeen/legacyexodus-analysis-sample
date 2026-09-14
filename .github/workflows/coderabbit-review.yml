@@ -77,15 +77,10 @@ jobs:
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           "$HOME/.local/bin/coderabbit" --version
 
-      - name: Authenticate CodeRabbit CLI
+      - name: Authenticate and Run CodeRabbit Review
         if: steps.filter.outputs.skip != 'true'
         env:
           CODERABBIT_API_KEY: ${{ secrets.CODERABBIT_API_KEY }}
-        run: |
-          coderabbit auth login --api-key "$CODERABBIT_API_KEY"
-
-      - name: Run CodeRabbit Review
-        if: steps.filter.outputs.skip != 'true'
         run: |
           # Determine base branch
           if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
@@ -98,20 +93,40 @@ jobs:
           # Ensure base branch reference is available locally
           git branch --track "$BASE_BRANCH" "origin/$BASE_BRANCH" 2>/dev/null || true
 
-          echo "Running CodeRabbit review comparing against base: $BASE_BRANCH"
+          echo "Authenticating CodeRabbit CLI..."
+          set +e
+          AUTH_OUTPUT=$(coderabbit auth login --api-key "$CODERABBIT_API_KEY" 2>&1)
+          AUTH_EXIT=$?
+          set -e
 
-          # Execute review with informational tolerance
+          echo "$AUTH_OUTPUT"
+
+          if [ $AUTH_EXIT -ne 0 ]; then
+            echo "::warning ::CodeRabbit authentication failed. Ensure an Agentic API key is configured."
+            echo "## CodeRabbit AI Review Report" >> $GITHUB_STEP_SUMMARY
+            echo "**Status:** ⚠️ Informational Notice (Service / Auth Failure)" >> $GITHUB_STEP_SUMMARY
+            echo "**Target Ref:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+            echo "**Base Branch:** \`$BASE_BRANCH\`" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "### Authentication Error" >> $GITHUB_STEP_SUMMARY
+            echo '```text' >> $GITHUB_STEP_SUMMARY
+            echo "$AUTH_OUTPUT" >> $GITHUB_STEP_SUMMARY
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "> [!IMPORTANT]" >> $GITHUB_STEP_SUMMARY
+            echo "> The CodeRabbit CLI requires an **Agentic API key** generated from your CodeRabbit organization settings, rather than a personal user API key." >> $GITHUB_STEP_SUMMARY
+            exit 0
+          fi
+
+          echo "Running CodeRabbit review comparing against base: $BASE_BRANCH"
           set +e
           coderabbit review --plain --no-color --base "$BASE_BRANCH" > coderabbit_review.txt 2>&1
           EXIT_CODE=$?
           set -e
 
           echo "CodeRabbit review finished with exit code: $EXIT_CODE"
-
-          # Display output in Actions log
           cat coderabbit_review.txt
 
-          # Write structured summary to GITHUB_STEP_SUMMARY
           echo "## CodeRabbit AI Review Report" >> $GITHUB_STEP_SUMMARY
           echo "**Target Ref:** \`${{ github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**Base Branch:** \`$BASE_BRANCH\`" >> $GITHUB_STEP_SUMMARY
@@ -126,7 +141,7 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
           else
             echo "### Service Notice" >> $GITHUB_STEP_SUMMARY
-            echo "CodeRabbit returned exit code \`$EXIT_CODE\`. This may indicate rate limits, service unavailability, or empty diff." >> $GITHUB_STEP_SUMMARY
+            echo "CodeRabbit returned exit code \`$EXIT_CODE\` during review execution." >> $GITHUB_STEP_SUMMARY
             echo '```text' >> $GITHUB_STEP_SUMMARY
             head -c 10000 coderabbit_review.txt >> $GITHUB_STEP_SUMMARY
             echo '' >> $GITHUB_STEP_SUMMARY
