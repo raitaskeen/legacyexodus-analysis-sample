@@ -1,0 +1,35 @@
+core-analysis:
+  - changed-files:
+      - any-glob-to-any-file: 'src/core/**'
+
+cli:
+  - changed-files:
+      - any-glob-to-any-file: 'src/cli/**'
+
+demo:
+  - changed-files:
+      - any-glob-to-any-file: 'demo/**'
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file: 'tests/**'
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'docs/**'
+          - '*.md'
+
+ci:
+  - changed-files:
+      - any-glob-to-any-file: '.github/**'
+
+security:
+  - changed-files:
+      - any-glob-to-any-file: 'SECURITY.md'
+
+dependencies:
+  - changed-files:
+      - any-glob-to-any-file:
+          - 'package.json'
+          - 'bun.lock'

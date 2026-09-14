@@ -1,0 +1,59 @@
+name: Semantic or Analysis Defect
+description: Report a discrepancy in CFG topology, reachability, or uncertainty detection.
+title: "[Semantic Defect]: "
+labels: ["bug", "semantic-correctness"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Report discrepancies in static analysis semantics, control-flow edges, or reachability calculations.
+  - type: textarea
+    id: source_reproduction
+    attributes:
+      label: Minimal Source Reproduction
+      description: Provide the smallest self-contained TypeScript or JavaScript code snippet that demonstrates the issue.
+      render: typescript
+    validations:
+      required: true
+  - type: dropdown
+    id: actual_state
+    attributes:
+      label: Actual Analysis State
+      description: The analysis state returned by `analyzeSource()` or the CLI.
+      options:
+        - RESOLVED
+        - UNSUPPORTED
+    validations:
+      required: true
+  - type: dropdown
+    id: expected_state
+    attributes:
+      label: Expected Analysis State
+      description: What state should be reported per docs/CAPABILITIES.md.
+      options:
+        - RESOLVED
+        - UNSUPPORTED
+    validations:
+      required: true
+  - type: input
+    id: affected_scope
+    attributes:
+      label: Affected Scope Identifier
+      description: Scope where the defect occurs (e.g., `module`, `functionName@line:col`).
+    validations:
+      required: true
+  - type: textarea
+    id: cfg_discrepancy
+    attributes:
+      label: CFG / Reachability Discrepancy
+      description: Describe the expected vs. actual blocks, edges, unreachable blocks, or dead-code statements.
+    validations:
+      required: true
+  - type: textarea
+    id: cli_output
+    attributes:
+      label: CLI Output / JSON Diagnostics
+      description: Paste the output of `bun run analyze <file> --json` or `--verbose`.
+      render: json
+    validations:
+      required: false
