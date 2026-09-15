@@ -1,0 +1,11 @@
+﻿# Default owner for everything in the repository
+* @raitaskeen
+
+# Core deterministic static analysis engine
+/src/core/ @raitaskeen
+
+# CI / CD and automation workflows
+/.github/ @raitaskeen
+
+# Security policy and reporting
+/SECURITY.md @raitaskeen

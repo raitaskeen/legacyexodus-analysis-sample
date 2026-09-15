@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-US"
+enable_free_tier: true
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  auto_review:
+    enabled: true
+    drafts: false
+  path_instructions:
+    - path: "**"
+      instructions: |
+        Review priorities for this deterministic static-analysis repository:
+        1. Semantic correctness: intraprocedural CFG construction and reachability analysis.
+        2. False RESOLVED states: if semantics cannot be modeled precisely, the state MUST remain UNSUPPORTED. Never fabricate CFG edges or precision.
+        3. Reachability errors: verify worklist traversal, unreachable basic blocks, and dead code statement isolation.
+        4. CFG topology errors: verify entry/exit blocks, single-entry basic blocks, branch conditions, and loop back-edges.
+        5. Invariant validation bypass: never bypass or weaken assertGraphInvariants.
+        6. Nondeterminism: all IDs and output order must remain 100% deterministic. No random hashes or UUIDs.
+        7. JSON contract regressions: machine-readable JSON output must remain stable and clean.
+        8. Security: follow least privilege, no credential leaks, no arbitrary code execution.
+        9. Test quality: strict invariants, 0 failures baseline.
+
+        Do NOT:
+        - Demand feature expansion or scope creep (this is a focused architectural slice).
+        - Complain that unsupported constructs (break, continue, throw, short-circuit expressions) are unsupported.
+        - Request stylistic abstractions without measurable performance or clarity benefit.
+        - Recommend adding runtime AI or LLMs to the analyzer.
+        - Score-chase test counts or suggest vanity tests.
