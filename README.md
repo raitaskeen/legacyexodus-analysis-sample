@@ -97,7 +97,7 @@ Open [http://localhost:3000](http://localhost:3000) to inspect the SVG graph lay
 ```bash
 bun run check
 ```
-Runs format checking, linting, typechecking, full test suite, and demo production build.
+Runs format checking, linting, typechecking, full test suite, and demo production build. Every Pull Request automatically undergoes this deterministic verification gate in CI alongside CodeQL static analysis, dependency vulnerability scanning, and coverage reporting.
 
 ---
 
